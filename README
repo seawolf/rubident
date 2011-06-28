@@ -1,1 +1,3 @@
 Rubident is a StatusNet (identi.ca etc.) client written in Ruby.
+
+Fill in your XMPP username and password, and the domain of the StatusNet instance to which you wish to post.
