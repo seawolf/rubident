@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-%w{rubygems oauth json pp}.each { |gem| require "#{gem}" }
+%w{rubygems oauth json}.each { |gem| require "#{gem}" }
 
 # All available services will reside in:
 service = Hash.new
