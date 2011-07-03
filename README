@@ -1,3 +1,22 @@
-Rubident is a StatusNet (identi.ca etc.) client written in Ruby.
+rubident is a multi-account, StatusNet (identi.ca etc.) and Twitter client written in Ruby
+It supports OAuth v1 (soon v2), which it can set up for you.
 
-Fill in your XMPP username and password, and the domain of the StatusNet instance to which you wish to post.
+To set up your accounts, log in to one of the supported sites and run:
+	./rubident.rb setup
+which will ask you to copy-and-paste a URL into your web browser.
+Give rubident the number from the website, and you're set.
+
+Read your 'home' timeline with:
+	./rubident.rb home
+and post to it with:
+	./rubident.rb post "<message-enclosed-in-speech-marks>"
+
+If you've set up more than one account, you will be asked to which account you'd like to use.
+
+There are two files that you need before using rubident:
+ 1) ~/.rubident-keys
+    this file must have the application's keys from the websites
+ 2) ~/.rubident
+    this can be empty to start with, but will be used to store your keys made from that copy-and-pasted code.
+
+There is some work to do on error handling and features such as replies, but reading and writing works for the most part :-)
