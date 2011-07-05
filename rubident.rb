@@ -160,6 +160,14 @@ else
 		json.reverse.each do |p|
 			puts "\n #{p["user"]["name"]} says:\n\t#{p["text"]}\n"
 		end
+
+	when "replies" then
+		url = "#{service["site"]}#{service["request_path"]}/statuses/replies.json"
+		data = access_token.get(url)
+		json = JSON.parse(data.body)
+		json.reverse.each do |p|
+			puts "\n #{p["user"]["name"]} says:\n\t#{p["text"]}\n"
+		end
 	end
 	
 end
