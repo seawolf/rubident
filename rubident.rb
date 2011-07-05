@@ -157,7 +157,7 @@ else
 		url = "#{service["site"]}#{service["request_path"]}/statuses/home_timeline.json"
 		data = access_token.get(url)
 		json = JSON.parse(data.body)
-		json.each do |p|
+		json.reverse.each do |p|
 			puts "\n #{p["user"]["name"]} says:\n\t#{p["text"]}\n"
 		end
 	end
