@@ -111,7 +111,7 @@ class Rubident
 		
 		request_token = consumer.get_request_token
 		
-		puts "
+		print "
 	To set-up rubident, open your web browser and sign in to #{@service["#{site}"]["name"]}. Authorise rubident by visiting:
 		#{request_token.authorize_url}
 
@@ -166,6 +166,10 @@ class Rubident
 
 	def post
 		# Posting a message to the account
+		print "\nEnter your message: "
+		message = STDIN.readline.chomp
+		
+		# Prepare extra submission data
 		url = "#{@service["site"]}#{@service["request_path"]}/account/verify_credentials.json"
 		me = @access_token.get(url)
 		my = JSON.parse(me.body)
@@ -174,7 +178,7 @@ class Rubident
 		# Send the update
 		update = @access_token.post(
 			"#{@service["site"]}#{@service["request_path"]}/statuses/update.json",
-			"status" => ARGV[1],
+			"status" => message,
 			"lat"    => coords.first,
 			"long"   => coords.last,
 			"source" => "rubident"
@@ -185,6 +189,13 @@ class Rubident
 	
 	def post_dm
 		# Posting private/direct message to an account
+		print "\nEnter the recipient: @"
+		user = STDIN.readline.chomp
+		
+		print "\nEnter your message: "
+		message = STDIN.readline.chomp
+		
+		# Prepare extra submission data
 		url = "#{@service["site"]}#{@service["request_path"]}/account/verify_credentials.json"
 		me = @access_token.get(url)
 		my = JSON.parse(me.body)
@@ -193,8 +204,8 @@ class Rubident
 		# Send the update
 		update = @access_token.post(
 			"#{@service["site"]}#{@service["request_path"]}/direct_messages/new.json",
-			"screen_name" => ARGV[1],
-			"text"	 			=> ARGV[2]
+			"screen_name" => user,
+			"text"	 			=> message
 		).body
 		
 		# TODO: response !
@@ -257,18 +268,31 @@ class Rubident
 	
 end
 
-client = Rubident.new
-
 if $0.include? "rubident.rb"
+	client = Rubident.new
 	if 				ARGV[0] == "setup" 		then client.setup
 	else			client.select_service
 		if 			ARGV[0] == "post" 		then client.post
-		elsif 	ARGV[0] == "post-dm" 	then client.post_dm
+		elsif 	ARGV[0] == "dm" 			then client.post_dm
 		elsif 	ARGV[0] == "home" 		then client.home
 		elsif 	ARGV[0] == "replies"	then client.replies
 		elsif 	ARGV[0] == "inbox"		then client.replies
 		elsif 	ARGV[0] == "outbox"		then client.replies
 		elsif 	ARGV[0] == "public"		then client.public
+		elsif		ARGV[0]								then puts "
+To use rubident, you must use one of the following as the first command:
+  setup   -  associate a service and account
+  home    -  your timeline
+  post    -  send a message
+  inbox   -  your private messages
+  dm      -  send a private message
+  outbox  -  sent private messages
+  public  -  most recently-posted messages from everyone*
+  
+  * - selected services only
+  
+e.g.
+  ./rubident.rb home"
 		end
 	end
 end
