@@ -1,5 +1,12 @@
-rubident is a multi-account, StatusNet (identi.ca etc.) and Twitter client written in Ruby
-It supports OAuth v1 (soon v2), which it can set up for you.
+rubident
+https://gitorious.org/rubident
+a multi-account, StatusNet (identi.ca etc.) and Twitter client written in Ruby
+
+rubident is a client for micro-blogging services. It supports OAuth v1 (soon v2), which it can set up for you.
+
+To set up rubident, you can use Bundler (and RVM too) to install all dependencies easily:
+	gem install bundler && bundle install
+This should fetch and install any more gems.
 
 To set up your accounts, log in to one of the supported sites and run:
 	./rubident.rb setup
@@ -14,9 +21,9 @@ and post to it with:
 If you've set up more than one account, you will be asked to which account you'd like to use.
 
 There are two files that you need before using rubident:
- 1) ~/.rubident-keys
-    this file must have the application's keys from the websites
- 2) ~/.rubident
-    this can be empty to start with, but will be used to store your keys made from that copy-and-pasted code.
+ 1) ~/.config/rubident/sites/keys
+    this file must have a list of all the available services and rubident's access keys from each
+ 2) ~/.config/rubident/accounts
+    this can be empty to start with, but will be used to store your personal keys made from that copy-and-pasted code.
 
-There is some work to do on error handling and features such as replies, but reading and writing works for the most part :-)
+There is some work to do on error handling and features such as context and location, but reading and writing works for the most part :-)

@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 
-%w{rubygems oauth json}.each { |gem| require "#{gem}" }
+%w{rubygems bundler/setup oauth json}.each { |gem| require "#{gem}" }
 
 # All available services will reside in:
 service = Hash.new
 
 # Recognised services are stored in 'rubident-keys'
 puts "Reading supported services... "
-globals = File.open("#{ENV['HOME']}/.rubident-keys", "r") { |f| f.read }	# auto-close
+globals = File.open("#{ENV['HOME']}/.config/rubident/sites", "r") { |f| f.read }	# auto-close
 globals = globals.split("\n")
 globals.each do |line|
 	parts = line.split(" ")
@@ -39,7 +39,7 @@ end
 
 # Registered services are stored in 'rubident'
 puts "\nReading your account details... "
-locals = File.open("#{ENV['HOME']}/.rubident", "r") { |f| f.read }	# auto-close
+locals = File.open("#{ENV['HOME']}/.config/rubident/accounts", "r") { |f| f.read }	# auto-close
 locals = locals.split("\n")
 locals.each do |s|
 	keys = s.split(" ")
@@ -94,7 +94,7 @@ Enter the code: "
 	
 	access_token = request_token.get_access_token(:oauth_verifier => pin)
 	
-	file = File.new("#{ENV['HOME']}/.rubident", "a+")
+	file = File.new("#{ENV['HOME']}/.config/rubident/accounts", "a+")
 	file.write("#{service["#{site}"]["site"]} #{access_token.token} #{access_token.secret}\n")
 	file.close
 	

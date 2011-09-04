@@ -1,0 +1,12 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    json (1.5.4)
+    oauth (0.4.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json (= 1.5.4)
+  oauth (= 0.4.4)
